@@ -32,17 +32,19 @@ func main() {
 
 ```bash
 go run main.go
+
 [0 1 2 3 4 5 6 7 8 9]
 ```
 
 
 #### Benchmarks
-Comparison of bubble, insertion, quick and native go sorting algorithms.
-OS: Linux
-Arch: amd64
-CPU: AMD Ryzen 7 3700X 8-Core Processor
+Comparison of bubble, insertion, quick and native go sorting algorithms.\
+OS: Linux\
+Arch: amd64\
+CPU: AMD Ryzen 7 3700X 8-Core Processor\
 ```bash
 go test -bench=. -benchmem
+
 goos: linux
 goarch: amd64
 pkg: github.com/vrumg/gensort
