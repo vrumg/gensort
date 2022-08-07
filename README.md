@@ -11,7 +11,7 @@
 
 
 **Usage**
-####Code example
+#### Code example
 ```golang
 package main
 
@@ -28,7 +28,7 @@ func main() {
 
 ```
 
-####Output
+#### Output
 
 ```bash
 go run main.go
@@ -36,7 +36,7 @@ go run main.go
 ```
 
 
-####Benchmarks
+#### Benchmarks
 Comparison of bubble, insertion, quick and native go sorting algorithms.
 OS: Linux
 Arch: amd64
