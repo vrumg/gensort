@@ -38,7 +38,7 @@ go run main.go
 
 
 #### Benchmarks
-Comparison of bubble, insertion, quick and native go sorting algorithms.\
+Comparison of bubble, insertion, quick and native go sorting algorithms on 10.000 elements slices.\
 OS: Linux\
 Arch: amd64\
 CPU: AMD Ryzen 7 3700X 8-Core Processor\
