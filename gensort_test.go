@@ -1,27 +1,116 @@
 package gensort
 
 import (
-	"reflect"
+	"sort"
 	"testing"
 )
 
-var intSliceOf1000Elements = []int{750, 63, 753, 482, -929, -141, -687, -129, -1000, -365, -339, -794, -673, -581, -963, -225, -515, -371, -95, 835, 852, 385, -475, -782, 584, 485, 865, 122, 935, 796, 313, -745, -631, -53, 592, 143, -436, 418, 431, 288, 591, 92, -399, -909, -133, -858, -204, 920, -746, 973, -441, 983, -287, -626, -546, -722, -273, 195, 509, 101, -334, -977, 821, 706, 901, -198, 179, -888, 181, 985, -665, 395, -688, -934, 115, 970, 296, 563, 103, -201, 450, 379, -690, 443, 2, 816, 328, 618, -737, -601, 872, -64, 761, -333, 351, -309, -975, 658, 165, -257, -925, -456, -763, 390, 794, 68, 664, 8, -770, -534, -74, -450, 126, -654, -524, -715, 200, -861, 633, -487, -739, -633, 564, -244, -178, -334, 732, 141, -300, 238, 613, 335, -189, -760, 962, 870, 648, -989, -88, 86, -901, 347, 106, -448, -340, -957, 942, -15, -681, -176, 163, 17, -29, 922, -887, 772, 549, 127, -165, 917, 863, -424, -380, 130, 92, 497, 961, -138, 642, -333, -474, -250, 776, -597, -667, 433, 728, -186, 891, 15, 597, 590, 702, -721, 588, 91, 224, 888, -286, -145, -629, 993, -466, 22, -172, -849, -715, -651, 250, -92, -889, -355, -139, 270, -338, 455, 299, 541, 962, -658, 736, 565, -122, -498, 739, 261, 412, 166, -810, -562, -329, -851, 477, -281, 139, 431, 789, 157, 881, 566, 672, 452, -731, 156, 792, -348, 365, -263, 367, -334, 401, -721, -773, -395, -668, -252, -274, -888, -5, -543, -567, 446, -257, -480, 400, -461, 61, -755, 488, 852, -429, 125, -467, -387, 210, -684, 172, 913, -937, -773, 748, 260, -71, -181, -338, -452, -328, -48, -894, 279, -986, -880, -631, 512, 198, 647, 20, 664, 328, 878, 138, 465, 609, 179, 750, -105, -409, 278, 505, -393, -386, -616, 775, 855, 633, -299, -662, -518, 876, -513, -755, 433, -287, 690, 178, 563, -682, -118, 667, 114, 860, -903, -670, 610, 976, 81, 54, -666, 579, 199, -196, -12, -339, 443, -905, -4, -228, 109, 507, -360, 976, 498, -573, -829, -319, 312, 754, 491, -973, 148, 855, -267, 285, 956, -142, 798, 915, -416, 966, -110, -712, 274, -27, -138, 824, 971, 713, 697, -773, -804, -403, -35, -822, 416, 284, -860, -227, -838, 196, -527, -472, 850, 196, 935, 837, 444, 551, -618, -713, 101, -819, -417, -230, -853, -999, -572, -46, 991, -477, -113, 261, -234, -750, 184, -863, -163, 122, 18, 798, 136, 870, -626, 987, -604, -772, -982, -945, -532, 873, -398, 334, 707, -381, 780, -218, -877, 920, 884, -179, -519, 375, -49, -548, -322, -302, -432, 6, -93, -873, -512, -850, -988, 863, -71, 664, 858, 574, -483, 879, 329, -207, -514, -414, -860, 815, -328, 978, 134, -358, -637, -25, -939, 924, 202, 982, -29, -293, -447, -179, 120, 660, -135, 938, 719, -688, 504, -316, -749, 35, -552, 124, -808, 902, -399, 72, -291, -145, 667, 853, 492, 244, 147, 482, 148, 8, -327, 921, -359, -737, 519, -475, -628, 698, -579, -770, -838, 655, 800, -27, 960, -542, 138, 564, 920, 405, 569, -806, 810, -366, -196, -696, -19, 864, -170, 982, 886, 831, 359, 279, 861, -515, 208, 78, -594, 723, -18, 976, -859, 628, 726, 266, 309, 618, -22, 895, -707, 418, -663, -732, -805, -177, 685, -576, -602, 34, -374, 392, 277, -21, -942, 507, -315, 165, 238, 747, -19, -87, -755, -148, -104, 864, -867, 75, 534, -652, -359, 480, 751, -409, 563, 236, -534, 781, -974, 47, -814, -224, 845, 611, -321, 167, -847, 671, -968, 263, 665, -358, 278, -521, -920, 74, 343, 135, 192, -466, 195, 750, -116, -979, -609, -30, 580, -816, -687, -737, -24, -395, 158, 532, -392, 994, -21, -841, -204, -747, 774, -824, 613, 185, 177, 349, 223, -611, -230, 795, 335, -272, -150, 450, -861, 200, -588, -690, -650, -156, -263, -167, -749, 462, -517, 545, 105, -531, -706, 448, -957, 576, 366, 500, -188, 88, 613, -401, -90, -136, -323, -428, -295, 847, -344, 235, -211, -12, 982, 366, 780, 234, 253, 40, 523, 912, -340, 542, -818, 959, -255, 417, 929, -221, 627, 597, -607, -360, 634, -797, -277, 884, -435, -593, -362, 512, -707, -852, -986, -113, -870, 867, -236, 101, -523, 827, -500, 564, 560, 766, -942, -885, 446, 177, 19, 412, 516, -303, -500, 533, -45, -793, -597, 673, 473, -438, -48, 522, -803, 947, 667, 780, 801, -514, -814, -842, -433, -715, -910, -251, -729, -110, 76, 837, -227, 430, 599, -271, 944, -927, -607, 522, 432, 964, -295, -475, 401, -517, -940, -332, -922, -631, 862, -162, 360, -99, -324, 466, 126, 171, 35, 847, -475, 437, -786, 250, 723, -504, -515, -284, 381, 394, 347, -991, -319, -264, -875, 675, -425, 180, 46, 844, 196, -668, 254, 913, -447, -357, -796, -332, 169, -427, -587, 282, -617, 674, 251, -340, -656, -914, 726, 959, 147, 151, 421, -552, 617, 871, -543, 378, 670, 782, 748, -864, -620, -690, -411, -658, 407, -40, 167, 428, 469, -742, 864, 62, -383, 594, 175, -76, 117, -165, -292, -75, 778, 461, 749, 67, 11, 848, -348, 812, 20, -234, -346, 326, 628, 204, -808, -195, -642, 842, -462, -339, -342, 544, 611, -252, -766, 772, -711, -855, -434, 154, -314, 171, -546, 756, 336, -152, -563, 93, 836, 738, -514, -618, 578, -570, 745, 416, -100, -967, 729, 795, 234, -129, 187, -181, 438, -826, -674, -968, -413, -296, 584, 966, 80, 622, -398, 687, -37, 918, -545, -809, 441, 118, -93, -421, 514, 767, 83, -397, -616, -484, -819, -968, -710, -691, -106, -778, 815, -680, -820, -528, 520, 17, 732, 918, 449, -717, -602, 374, 88, 61, 228, -610, -418, -102, -30, -545, 195, -319, 973, -910, -78, 571, 323, -880, 23, 709, 753, -963, -182, -797, 68, -576, 230, 598, 550, -870, -412, 795, 764, -955, -84, 56, 722, 273, -658, -430, -184, -571, 85, 12, -806, -951, 380, -384, -329, -781, 173, -584, 262, -100, -859}
-
 func TestBubbleSort(t *testing.T) {
-	originalSlice := []int{5, 9, 0, 4, 2, 8, 3, 7, 6, 1}
-	expectedSlice := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
-	BubbleSort[int](originalSlice)
-	if ok := reflect.DeepEqual(expectedSlice, originalSlice); !ok {
+	toSort, err := getParametrizedSliceToSort[int](100, -10, 10)
+	if err != nil {
+		t.Errorf("%v", err)
+	}
+
+	BubbleSort[int](toSort)
+	if !isSliceSorted(toSort) {
 		t.Error()
 	}
 }
 
-func BenchmarkBubbleSort(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		testSlice := make([]int, 0, len(intSliceOf1000Elements))
-		copy(testSlice, intSliceOf1000Elements)
-		BubbleSort[int](testSlice)
+func TestInsertionSort(t *testing.T) {
+	toSort, err := getParametrizedSliceToSort[int](100, -10, 10)
+	if err != nil {
+		t.Errorf("%v", err)
 	}
+
+	InsertionSort[int](toSort)
+	if !isSliceSorted(toSort) {
+		t.Error()
+	}
+}
+
+func TestQuickSort(t *testing.T) {
+	toSort, err := getParametrizedSliceToSort[int](100, -10, 10)
+	if err != nil {
+		t.Errorf("%v", err)
+	}
+
+	QuickSort(toSort)
+	if !isSliceSorted(toSort) {
+		t.Error()
+	}
+}
+
+func TestNativeSort(t *testing.T) {
+	toSort, err := getParametrizedSliceToSort[int](100, -10, 10)
+	if err != nil {
+		t.Errorf("%v", err)
+	}
+
+	sort.Slice(toSort, func(i, j int) bool {
+		return toSort[i] < toSort[j]
+	})
+	if !isSliceSorted(toSort) {
+		t.Error()
+	}
+}
+
+func TestGetParametrizedSliceToSort(t *testing.T) {
+	t.Run("type int", func(t *testing.T) {
+		length := 20
+		min := -10
+		max := 10
+		toSort, err := getParametrizedSliceToSort[int](length, min, max)
+		if err != nil {
+			t.Errorf("%v", err)
+		}
+		if toSort == nil {
+			t.Error()
+		}
+		t.Log(toSort)
+	})
+
+	t.Run("type byte", func(t *testing.T) {
+		length := 20
+		min := byte(0)
+		max := byte(10)
+		toSort, err := getParametrizedSliceToSort[byte](length, min, max)
+		if err != nil {
+			t.Errorf("%v", err)
+		}
+		if toSort == nil {
+			t.Error()
+		}
+		t.Log(toSort)
+	})
+
+	t.Run("type uint8", func(t *testing.T) {
+		length := 20
+		min := uint8(0)
+		max := uint8(10)
+		toSort, err := getParametrizedSliceToSort[uint8](length, min, max)
+		if err != nil {
+			t.Errorf("%v", err)
+		}
+		if toSort == nil {
+			t.Error()
+		}
+		t.Log(toSort)
+	})
+
+	t.Run("type float32", func(t *testing.T) {
+		length := 200
+		min := float32(-1.0)
+		max := float32(1.0)
+		toSort, err := getParametrizedSliceToSort[float32](length, min, max)
+		if err != nil {
+			t.Errorf("%v", err)
+		}
+		if toSort == nil {
+			t.Error()
+		}
+		t.Log(toSort)
+	})
 }
 
 func FuzzBubbleSort(f *testing.F) {
@@ -30,27 +119,62 @@ func FuzzBubbleSort(f *testing.F) {
 		BubbleSort[byte](slice)
 	})
 }
-
-func TestInsertionSort(t *testing.T) {
-	originalSlice := []int{5, 9, 0, 4, 2, 8, 3, 7, 6, 1}
-	expectedSlice := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
-	InsertionSort[int](originalSlice)
-	if ok := reflect.DeepEqual(expectedSlice, originalSlice); !ok {
-		t.Error()
-	}
-}
-
-func BenchmarkInsertionSort(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		testSlice := make([]int, 0, len(intSliceOf1000Elements))
-		copy(testSlice, intSliceOf1000Elements)
-		InsertionSort[int](testSlice)
-	}
-}
-
 func FuzzInsertionSort(f *testing.F) {
 	f.Add([]byte{5, 9, 0, 4, 2, 8, 3, 7, 6, 1})
 	f.Fuzz(func(t *testing.T, slice []byte) {
 		InsertionSort[byte](slice)
 	})
+}
+
+func FuzzQuickSort(f *testing.F) {
+	f.Add([]byte{5, 9, 0, 4, 2, 8, 3, 7, 6, 1})
+	f.Fuzz(func(t *testing.T, toSort []byte) {
+		QuickSort[byte](toSort)
+	})
+}
+
+func BenchmarkBubbleSort(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		toSort, err := getParametrizedSliceToSort[int](10_000, -10_000, 10_000)
+		if err != nil {
+			b.Errorf("%v", err)
+		}
+
+		BubbleSort[int](toSort)
+	}
+}
+
+func BenchmarkInsertionSort(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		toSort, err := getParametrizedSliceToSort[int](10_000, -10_000, 10_000)
+		if err != nil {
+			b.Errorf("%v", err)
+		}
+
+		InsertionSort[int](toSort)
+	}
+}
+
+func BenchmarkQuickSort(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		toSort, err := getParametrizedSliceToSort[int](10_000, -10_000, 10_000)
+		if err != nil {
+			b.Errorf("%v", err)
+		}
+
+		QuickSort(toSort)
+	}
+}
+
+func BenchmarkNativeSort(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		toSort, err := getParametrizedSliceToSort[int](10_000, -10_000, 10_000)
+		if err != nil {
+			b.Errorf("%v", err)
+		}
+
+		sort.Slice(toSort, func(i, j int) bool {
+			return toSort[i] < toSort[j]
+		})
+	}
 }
